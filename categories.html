@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zxx">
+	
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+
+<head>
+	<title>Game Warrior Template</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Game Warrior Template">
+	<meta name="keywords" content="warrior, game, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->   
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+
+
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script> 
+<style>
+div.a {
+  text-align: center;
+}
+
+
+
+</style>
+</head>
+
+
+
+
+<script>
+$(document).ready(function(){   
+
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		var jsonData={"user": name};
+ $.ajax({
+	url: "http://127.0.0.1:4242/findfavourlist", 
+				dataType: 'JSON',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				for( c=0; c<result.length; c++)
+				{//alert("hi1");
+				var div_id = "div" + (c+1);//alert("hi2");
+				document.getElementById(div_id).style.visibility="visible";//alert("hi3");
+				var result2 = "img/review/"+result[c].image;//alert("hi4");
+				var imgid = "img"+(c+1);
+				document.getElementById(imgid).src = result2;//alert("hi5");
+				var result3 = result[c].art_name;
+				var art_nameid = "art_name"+(c+1);
+				document.getElementById(art_nameid).innerHTML=result3;
+				} 
+
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	})
+	});
+</script>
+
+<script>
+	$(document).ready(function(){   
+	 var favlist = [];
+	 var favitem = 0;
+	 
+	 var favlist2 = [];
+	 var favitem2 = 0;
+	 
+	 $("#add").click(function(){
+	 favlist[favitem] = $("#favorite_list").val();
+	 favitem +=1;
+	 localStorage.setItem("favlist", JSON.stringify(favlist));
+	 })
+	$("#show").click(function(){
+        var tempName;
+		tempName=localStorage.getItem("name");
+		
+		var name="&Email="+tempName;
+        
+        $.ajax({
+          url: "http://127.0.0.1:4242/readfavourlist",          
+          type: "POST",
+          data: name ,
+          success: function (result) {
+            result = JSON.parse(result);
+            $("#favlist").empty();
+            $.each(result, function(i,fav){
+			  var favourite = fav.favlist;
+              favlist2[favitem2] = favourite;
+			  favitem+=1;
+			  $("#favlist").append('<div class="container"><div class="row"><div class="col-1"></div><font color="Orange"><p>'+ favourite +'</p></font></div></div>');
+			});
+            console.log(result);
+            //alert(result);
+          },
+          error: function(result){
+              console.log(result);
+            }
+        });
+        
+		  });
+	 
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:4242/member",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+	$("#delfav1").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("del Sofia is success, please reload page ");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/delfavcar", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});window.location.reload();
+});
+	$("#delfav2").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("del Tina is success, please reload page");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/delfavcar2", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});window.location.reload();
+	
+});
+	$("#delfav3").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("del Rosalina is success, please reload page");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/delfavcar3", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});window.location.reload();
+});
+	$("#delfav4").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("del Sinam is success, please reload page");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/delfavcar4", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});window.location.reload();
+});
+$("#deleteall").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		alert("success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/deleteall", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+	window.location.reload();
+	});
+	$("#logout").click(function(){
+		alert(" please wait.");
+		localStorage.removeItem("name");
+		localStorage.removeItem("favlist");
+		window.location.href = "http://127.0.0.1:4242/loginres";
+		})
+	});
+	
+</script>
+<script>
+$(document).ready(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
+                dataType: "json",
+                success: function (result, status, xhr) {
+              
+                
+				var todaytemp = result.soilTemp[0].value+ "°C";
+				//var maxtemp = result.weatherForecast[0].forecastMaxtemp.value+"C";
+				var place = result.soilTemp[0].place;
+				var time = result.soilTemp[0].recordTime;
+				
+				document.getElementById("temp").innerHTML =  todaytemp;
+				document.getElementById("place").innerHTML =  place;
+					document.getElementById("rectime").innerHTML =  time;
+           
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        });
+ 
+
+
+</script>
+
+
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="container">
+			<!-- logo -->
+			<a class="site-logo" href="index.html">
+				
+			</a>
+			<button class="user-panel" data-toggle="modal" data-target="#modalLoginForm" id="logout">Logout
+				
+			</button>
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!-- site menu -->
+			<nav class="main-menu">
+				<ul>
+					<li><a href="/index">Home</a></li>
+					<li><a href="/review">Artists</a></li>
+					<li><a href="/categories">Favourite List</a></li>
+					<li><a href="/contact">Map</a></li>
+					<li><a href="/api">Api</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+
+	<!-- Latest news section -->
+	
+	<div class="latest-news-section">
+		<div class="ln-title"  >Weather</p></div>
+		<div class="news-ticker">
+			<div class="news-ticker-contant">
+				<div class="nt-item"><span class="new">Temp <li id="temp"> </li></span></div>
+				
+				<div class="nt-item"><span class="strategy">Place<li id="place"> </li></span> </div>
+				<div class="nt-item"><span class="racing">Time <li id="rectime"> </li> </span></div>
+			</div>
+		</div>
+	</div>
+	<!-- Latest news section end -->
+
+
+	<!-- Page info section -->
+	<section class="hero-section">
+		<div class="hero-slider owl-carousel">
+			
+			<div class="hs-item set-bg" data-setbg="img/yy.jpg">
+			
+				<div class="hs-text" >
+					<div class="container">
+				
+						<h2>The Best <span>Games</span> Out There</h2>
+						<p>1 <br> 2 <br>3</p>
+						<a href="#" class="site-btn">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="hs-item set-bg" data-setbg="img/aa.jpg">
+				<div class="hs-text">
+					<div class="container">
+						<h2>The Best <span>Games</span> Out There</h2>
+						<p>4 <br> 5 <br>6</p>
+						<a href="#" class="site-btn">Read More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Page info section -->
+<div style="visibility:hidden" >eee </div>
+
+<button id="deleteall" class= "site-btn btn-sm" style='display: block;
+  margin-left: auto;
+  margin-right: auto;' type="button">Delete All</button>
+  								<div style="visibility:hidden" >eee </div>
+									<button id="show" class= "site-btn btn-sm" style='display: block; margin-left: auto;margin-right: auto;'type="button">Show Comment</button>
+									
+									<div class="a" id="favlist"  ></div>
+									<div id="favlist2"></div>
+
+	<section class="page-section review-page spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="review-item" id="div1" style="visibility:hidden">
+						<div class="review-cover set-bg" id="img1" data-setbg="img/review/01-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<div  id="art_name1">Sofia</div>
+							
+							<p>Miss International Macau 2017 Macau | Portugal 🇲🇴🇵🇹</p>
+							 <button id="delfav1" class= "site-btn btn-sm" type="button">Delete</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item" id="div2" style="visibility:hidden">
+						<div class="review-cover set-bg" id="img2" data-setbg="img/review/02-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<div id="art_name2">Tina</div>
+							
+							<p>Tina! is a compilation album from American rock singer Tina Turner. The album was released September 30, 2008 by Capitol Records in North America</p>
+							<button id="delfav2" class= "site-btn btn-sm" type="button">Delete</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item" id="div3" style="visibility:hidden">
+						<div class="review-cover set-bg" id="img3" data-setbg="img/review/03-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<div  id="art_name3">Rosalina</div>
+							
+							<p>Rosalina, known as Rosetta in Japan (ロゼッタ), is a fictional character in the Mario series of video games. She debuts in Super Mario Galaxy, where she acts as a non-player character who resides in the Comet Observatory, the game's hub world.</p>
+							<button id="delfav3" class= "site-btn btn-sm" type="button">Delete</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item" id="div4" style="visibility:hidden">
+						<div class="review-cover set-bg"  id="img4" data-setbg="img/review/04-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<div id="art_name4">Sinam</div>
+							
+							<p>Sinam is a village development committee in the Himalayas of Taplejung District in the Mechi Zone of north-eastern Nepal.</p>
+							<button id="delfav4" class= "site-btn btn-sm" type="button">Delete</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item" id="div5" style="visibility:hidden">
+						<div class="review-cover set-bg"  id="img5" data-setbg="img/review/05-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<div  id="art_name5">Puinam</div>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav5" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item" id="div6" style="visibility:hidden">
+						<div class="review-cover set-bg"  id="img6" data-setbg="img/review/06-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<div  id="art_name6">Doris</div>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav6" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+					
+			</div>
+			<div class="text-center pt-4">
+				<button class="site-btn btn-sm">Load More</button>
+			</div>
+		</div>
+	</section>
+	<!-- Page section end -->
+
+
+
+	
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<ul class="footer-menu">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="review.html">Games</a></li>
+				<li><a href="categories.html">Blog</a></li>
+				<li><a href="community.html">Forums</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.marquee.min.js"></script>
+	<script src="js/main.js"></script>
+    </body>
+</html>

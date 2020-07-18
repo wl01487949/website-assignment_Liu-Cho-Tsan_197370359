@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+
+
+<head>
+	<title>Game Warrior Template</title>
+	 <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Your Website Title" />
+  <meta property="og:description"   content="Your description" />
+  <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+	<meta charset="UTF-8">
+	<meta name="description" content="Game Warrior Template">
+	<meta name="keywords" content="warrior, game, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->   
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v7.0" nonce="9GhfPiAy"></script>
+	
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script> 
+</head>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v7.0" nonce="5CWorDqo"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script> 
+
+<script>
+	$(document).ready(function(){   
+	 var favlist = [];
+	 var favitem = 0;
+	 
+	 var favlist2 = [];
+	 var favitem2 = 0;
+	 
+	 $("#add").click(function(){
+	 favlist[favitem] = $("#favorite_list").val();
+	 favitem +=1;
+	 localStorage.setItem("favlist", JSON.stringify(favlist));
+	 })
+	 
+	 
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:4242/member",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+	
+	$("#addfav1").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");		
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("Adding Sofia is success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/addfavcar", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+});
+
+$("#addfav2").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("Adding Tina is success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/addfavcar2", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+});
+
+$("#addfav3").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("Adding Rosalina is success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/addfavcar3", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+});
+
+$("#addfav4").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("Adding Sinam is success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/addfavcar4", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+});
+
+$("#addfav5").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("Adding Puinam is success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/addfavcar5", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+});
+$("#addfav6").click(function(){
+		var tempName;
+		tempName=localStorage.getItem("name");
+		var name="&Email="+tempName;
+		//var jsonData={"name":tempName, "Data":addfavcar};
+		alert("Adding Doris is success");
+		var jsonData={"user": name};
+		 $.ajax({
+				url: "http://127.0.0.1:4242/addfavcar6", 
+				dataType: 'jsonp',
+				type: 'POST',
+				data: JSON.stringify(jsonData),
+				success: function(result){
+				}, error: function (xhr, textStatus, errorThrown) {
+      		}
+	});
+});
+	
+
+	
+	$("#logout").click(function(){
+		alert(" please wait.");
+		localStorage.removeItem("name");
+		localStorage.removeItem("favlist");
+		window.location.href = "http://127.0.0.1:4242/loginres";
+		})
+
+		
+
+});
+
+</script>
+<script>
+$(document).ready(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
+                dataType: "json",
+                success: function (result, status, xhr) {
+              
+                
+				var todaytemp = result.soilTemp[0].value+ "°C";
+				//var maxtemp = result.weatherForecast[0].forecastMaxtemp.value+"C";
+				var place = result.soilTemp[0].place;
+				var time = result.soilTemp[0].recordTime;
+				
+				document.getElementById("temp").innerHTML =  todaytemp;
+				document.getElementById("place").innerHTML =  place;
+					document.getElementById("rectime").innerHTML =  time;
+           
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        });
+ 
+
+
+</script>
+
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="container">
+			<!-- logo -->
+			<a class="site-logo" href="index.html">
+				
+			</a>
+			<button class="user-panel" data-toggle="modal" data-target="#modalLoginForm" id="logout">Logout
+				
+			</button>
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!-- site menu -->
+			<nav class="main-menu">
+				<ul>
+					<li><a href="/index">Home</a></li>
+					<li><a href="/review">Artists</a></li>
+					<li><a href="/categories">Favourite List</a></li>
+					<li><a href="/contact">Map</a></li>
+					<li><a href="/api">Api</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+
+	<!-- Latest news section -->
+	<div class="latest-news-section">
+		<div class="ln-title"  >Weather</p></div>
+		<div class="news-ticker">
+			<div class="news-ticker-contant">
+				<div class="nt-item"><span class="new">Temp <li id="temp"> </li></span></div>
+				
+				<div class="nt-item"><span class="strategy">Place<li id="place"> </li></span> </div>
+				<div class="nt-item"><span class="racing">Time <li id="rectime"> </li> </span></div>
+			</div>
+		</div>
+	</div>
+	<!-- Latest news section end -->
+
+
+	<!-- Page info section -->
+	<section class="hero-section">
+		<div class="hero-slider owl-carousel">
+			
+			<div class="hs-item set-bg" data-setbg="img/rr.jpg">
+			
+				<div class="hs-text" >
+					<div class="container">
+				
+						<h2>The Best <span>Games</span> Out There</h2>
+						<p>1 <br> 2 <br>3</p>
+						<a href="#" class="site-btn">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="hs-item set-bg" data-setbg="img/tt.jpg">
+				<div class="hs-text">
+					<div class="container">
+						<h2>The Best <span>Games</span> Out There</h2>
+						<p>4 <br> 5 <br>6</p>
+						<a href="#" class="site-btn">Read More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Page info section -->
+<div style="visibility:hidden" >eee </div>
+<div class="fb-like" data-href="http://127.0.0.1:4242/review" data-width="20px" 
+data-layout="standard" data-action="like" data-size="large" data-share="true" ></div>
+	<!-- Page section -->
+	<section class="page-section review-page spad">
+		<div class="container">
+			<div class="row">
+			<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg"  data-setbg="img/review/01-thumbnail.jpg">
+							<div class="score yellow">-10</div>
+						</div>
+						<div class="review-text">
+							<h4>Sofia</h4>
+							
+							<p> Miss International Macau 2017 Macau | Portugal 🇲🇴🇵🇹</p>
+							<div <button id="addfav1" class= "site-btn btn-sm" type="button">Add</button></div>
+
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg"  data-setbg="img/review/02-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Tina</h4>
+							
+							<p>Tina! is a compilation album from American rock singer Tina Turner. The album was released September 30, 2008 by Capitol Records in North America</p>
+							<div <button id="addfav2" class= "site-btn btn-sm" type="button">Add</button></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/03-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Rosalina</h4>
+							
+							<p>Rosalina, known as Rosetta in Japan (ロゼッタ), is a fictional character in the Mario series of video games. She debuts in Super Mario Galaxy, where she acts as a non-player character who resides in the Comet Observatory, the game's hub world.</p>
+							<button id="addfav3" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/04-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Sinam</h4>
+							
+							<p>Sinam is a village development committee in the Himalayas of Taplejung District in the Mechi Zone of north-eastern Nepal.</p>
+							<button id="addfav4" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/05-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Puinam</h4>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav5" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/06-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Doris</h4>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav6" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+					<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/07-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Ianian</h4>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav3" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/08-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Rachel</h4>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav4" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/09-thumbnail.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h4>Amilia</h4>
+							
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame. Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+							<button id="addfav5" class= "site-btn btn-sm" >Add</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="text-center pt-4">
+				<button class="site-btn btn-sm">Load More</button>
+			</div>
+		</div>
+	</section>
+	<!-- Page section end -->
+
+
+
+	
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<ul class="footer-menu">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="review.html">Games</a></li>
+				<li><a href="categories.html">Blog</a></li>
+				<li><a href="community.html">Forums</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.marquee.min.js"></script>
+	<script src="js/main.js"></script>
+    </body>
+</html>

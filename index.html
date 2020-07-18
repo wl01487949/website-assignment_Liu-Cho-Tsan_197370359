@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Game Warrior Template</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="Game Warrior Template">
+	<meta name="keywords" content="warrior, game, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->   
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script> 
+
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<script>
+$(document).ready(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=fnd&lang=en",
+                dataType: "json",
+                success: function (result, status, xhr) {
+              
+                
+				var todaytemp = result.soilTemp[0].value+ "°C";
+				//var maxtemp = result.weatherForecast[0].forecastMaxtemp.value+"C";
+				var place = result.soilTemp[0].place;
+				var time = result.soilTemp[0].recordTime;
+				
+				document.getElementById("temp").innerHTML =  todaytemp;
+				document.getElementById("place").innerHTML =  place;
+					document.getElementById("rectime").innerHTML =  time;
+           
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        });
+ 
+
+
+</script>
+<script>
+$(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "https://api.covid19api.com/summary",
+                dataType: "json",
+                success: function (result, status, xhr) {
+              
+                
+				var newconfirmed = result.Global.NewConfirmed ;
+				var totalconfirmed = result.Global.TotalConfirmed;
+				var totaldeaths = result.Global.TotalDeaths;
+				document.getElementById("newcon").innerHTML = newconfirmed ;
+				document.getElementById("totalcon").innerHTML = totalconfirmed ;
+				document.getElementById("totaldea").innerHTML = totaldeaths ;
+				//document.getElementById("place").innerHTML =  place;
+					//document.getElementById("rectime").innerHTML =  time;
+           
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        });
+
+
+
+</script>
+<script>
+	$(document).ready(function(){   
+	 var favlist = [];
+	 var favitem = 0;
+	 
+	 var favlist2 = [];
+	 var favitem2 = 0;
+	 
+	 $("#add").click(function(){
+	 favlist[favitem] = $("#favorite_list").val();
+	 favitem +=1;
+	 alert("success,Please click save");
+	 localStorage.setItem("favlist", JSON.stringify(favlist));
+	 })
+	 
+	 $("#save").click(function(){
+	
+	var tempName, tempfavlist;
+	tempName=localStorage.getItem("name");
+	tempfavlist=localStorage.getItem("favlist");
+		
+	var myfavdata="&Email="+tempName+"&favlist="+tempfavlist;
+	
+	$.ajax({
+	type: "POST",
+	data:  myfavdata ,
+	url: "http://127.0.0.1:4242/member",
+	success: function (result) {
+		alert(result);
+		if (result == "OK") {
+		alert("The data was sent");
+		} 
+		}, error: function (xhr, textStatus, errorThrown) {
+		alert("Favourite_List is lose");
+		console.log(textStatus);
+		}
+	});
+});
+	 
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:4242/member",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+	
+
+
+	$("#logout").click(function(){
+		alert(" please wait.");
+		localStorage.removeItem("name");
+		localStorage.removeItem("favlist");
+		window.location.href = "http://127.0.0.1:4242/loginres";
+		})
+
+		
+
+});
+
+</script>
+<script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML = "Time: "+
+  h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="container">
+			<!-- logo -->
+			<a class="site-logo" href="/index.html">
+				
+			</a>
+			
+
+		  
+			<button class="user-panel" data-toggle="modal" data-target="#modalLoginForm" id="logout">Logout
+				
+			</button>
+			<!-- responsive -->
+			<div class="nav-switch">
+				<i class="fa fa-bars"></i>
+			</div>
+			<!-- site menu -->
+			<nav class="main-menu">
+				<ul>
+					<li><a href="/index">Home</a></li>
+					<li><a href="/review">Artists</a></li>
+					<li><a href="/categories">Favourite List</a></li>
+					<li><a href="/contact">Map</a></li>
+					<li><a href="/api">Api</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<!-- Header section end -->
+
+	<!-- Hero section -->
+	<section class="hero-section">
+		<div class="hero-slider owl-carousel">
+			
+			<div class="hs-item set-bg" data-setbg="img/slider-1.jpg">
+			
+				<div class="hs-text" >
+					<div class="container">
+				
+						<h2>The Best <span>Games</span> Out There</h2>
+						<p>1 <br> 2 <br>3</p>
+						<a href="#" class="site-btn">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="hs-item set-bg" data-setbg="img/slider-2.jpg">
+				<div class="hs-text">
+					<div class="container">
+						<h2>The Best <span>Games</span> Out There</h2>
+						<p>4 <br> 5 <br>6</p>
+						<a href="#" class="site-btn">Read More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Hero section end -->
+
+
+	<!-- Latest news section -->
+	
+	<div class="latest-news-section">
+		<div class="ln-title"  >Weather</p></div>
+		<div class="news-ticker">
+			<div class="news-ticker-contant">
+				<div class="nt-item"><span class="new">Temp <li id="temp"> </li></span></div>
+				
+				<div class="nt-item"><span class="strategy">Place<li id="place"> </li></span> </div>
+				<div class="nt-item"><span class="racing">Time <li id="rectime"> </li> </span></div>
+			</div>
+		</div>
+	</div>
+	<!-- Latest news section end -->
+
+<body onload="startTime()"  >
+
+<div id="txt"></div>
+	<!-- Feature section -->
+	<section class="feature-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 p-0">
+					<div class="feature-item set-bg" data-setbg="img/j1.jpg">
+						<span class="cata new">covid 19</span>
+						<div class="fi-content text-white">
+						
+	
+							<a href="#" class="fi-comment">3 Comments</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 p-0">
+					<div class="feature-item set-bg" data-setbg="img/j2.jpg">
+						<span class="cata strategy">New Confirmed</span>
+						<div class="fi-content text-white">
+							<h5><a href="#" id="newcon" style="font-size:50px">1</a></h5>
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden" >eee </div>
+
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden"> eee</div>
+							<div style="visibility:hidden">e </div>
+							<div style="visibility:hidden">e </div>
+							<a href="#" class="fi-comment">333 Comments</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 p-0">
+					<div class="feature-item set-bg" data-setbg="img/j3.jpg">
+						<span class="cata new">Total Confirmed</span>
+						<div class="fi-content text-white">
+							<h5><a href="#" id="totalcon" style="font-size:50px">2</a></h5>
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden" >eee </div>
+
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden"> eee</div>
+							<div style="visibility:hidden">e </div>
+							<div style="visibility:hidden">e </div>
+							<a href="#" class="fi-comment">4 Comments</a>
+						</div>
+					</div>
+				</div>
+								<div class="col-lg-3 col-md-6 p-0">
+					<div class="feature-item set-bg" data-setbg="img/j4.jpg">
+						<span class="cata new">Total Deaths</span>
+						<div class="fi-content text-white">
+							<h5><a href="#" id="totaldea" style="font-size:50px">3</a></h5>
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden" >eee </div>
+
+							<div style="visibility:hidden" >eee </div>
+							<div style="visibility:hidden"> eee</div>
+							<div style="visibility:hidden">e </div>
+							<div style="visibility:hidden">e </div>
+							<a href="#" class="fi-comment">4 Comments</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<!-- Feature section end -->
+
+
+	<!-- Recent game section  -->
+	<section class="recent-game-section spad set-bg" data-setbg="img/recent-game-bg.png">
+		<div class="container">
+		  <div class="w3-center w3-padding-32">
+									<p id="prop1">
+									<div id="block_container">
+									<div id="bloc1">
+									<input type= "text" id="favorite_list">
+									
+									<button class="cata new" id="add">Add Comment</button>
+									<button class="cata racing" id="save">Save Comment</button>
+									
+									</div></div>
+									</p>
+	 </div>	
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="recent-game-item">
+						<div class="rgi-thumb set-bg" data-setbg="img/recent-game/1.jpg">
+							<div class="cata new">new</div>
+						</div>
+						<div class="rgi-content">
+							<h5>Suspendisse ut justo tem por, rutrum</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
+							<a href="#" class="comment">3 Comments</a>
+							<div class="rgi-extra">
+								<div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
+								<div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="recent-game-item">
+						<div class="rgi-thumb set-bg" data-setbg="img/recent-game/2.jpg">
+							<div class="cata racing">racing</div>
+						</div>
+						<div class="rgi-content">
+							<h5>Susce pulvinar metus nulla, vel  facilisis sem </h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
+							<a href="#" class="comment">3 Comments</a>
+							<div class="rgi-extra">
+								<div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
+								<div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="recent-game-item">
+						<div class="rgi-thumb set-bg" data-setbg="img/recent-game/3.jpg">
+							<div class="cata adventure">Adventure</div>
+						</div>
+						<div class="rgi-content">
+							<h5>Suspendisse ut justo tem por, rutrum</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
+							<a href="#" class="comment">3 Comments</a>
+							<div class="rgi-extra">
+								<div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
+								<div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Recent game section end -->
+
+
+	<!-- Tournaments section -->
+	<section class="tournaments-section spad">
+		<div class="container">
+			<div class="tournament-title">Tournaments</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="tournament-item mb-4 mb-lg-0">
+						<div class="ti-notic">Premium Tournament</div>
+						<div class="ti-content">
+							<div class="ti-thumb set-bg" data-setbg="img/tournament/1.jpg"></div>
+							<div class="ti-text">
+								<h4>World Of WarCraft</h4>
+								<ul>
+									<li><span>Tournament Beggins:</span> June 20, 2018</li>
+									<li><span>Tounament Ends:</span> July 01, 2018</li>
+									<li><span>Participants:</span> 10 teams</li>
+									<li><span>Tournament Author:</span> Admin</li>
+								</ul>
+								<p><span>Prizes:</span> 1st place $2000, 2nd place: $1000, 3rd place: $500</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="tournament-item">
+						<div class="ti-notic">Premium Tournament</div>
+						<div class="ti-content">
+							<div class="ti-thumb set-bg" data-setbg="img/tournament/2.jpg"></div>
+							<div class="ti-text">
+								<h4>DOOM</h4>
+								<ul>
+									<li><span>Tournament Beggins:</span> June 20, 2018</li>
+									<li><span>Tounament Ends:</span> July 01, 2018</li>
+									<li><span>Participants:</span> 10 teams</li>
+									<li><span>Tournament Author:</span> Admin</li>
+								</ul>
+								<p><span>Prizes:</span> 1st place $2000, 2nd place: $1000, 3rd place: $500</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Tournaments section bg -->
+
+
+	<!-- Review section -->
+	<section class="review-section spad set-bg" data-setbg="img/review-bg.png">
+		<div class="container">
+			<div class="section-title">
+				<div class="cata new">new</div>
+				<h2>Recent Reviews</h2>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/1.jpg">
+							<div class="score yellow">9.3</div>
+						</div>
+						<div class="review-text">
+							<h5>Assasin’’s Creed</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/2.jpg">
+							<div class="score purple">9.5</div>
+						</div>
+						<div class="review-text">
+							<h5>Doom</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/3.jpg">
+							<div class="score green">9.1</div>
+						</div>
+						<div class="review-text">
+							<h5>Overwatch</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="review-item">
+						<div class="review-cover set-bg" data-setbg="img/review/4.jpg">
+							<div class="score pink">9.7</div>
+						</div>
+						<div class="review-text">
+							<h5>GTA</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Review section end -->
+
+
+	<!-- Footer top section -->
+	<section class="footer-top-section">
+		<div class="container">
+			<div class="footer-top-bg">
+				<img src="img/footer-top-bg.png" alt="">
+			</div>
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="footer-logo text-white">
+						<img src="img/footer-logo.png" alt="">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="footer-widget mb-5 mb-md-0">
+						<h4 class="fw-title">Latest Posts</h4>
+						<div class="latest-blog">
+							<div class="lb-item">
+								<div class="lb-thumb set-bg" data-setbg="img/latest-blog/1.jpg"></div>
+								<div class="lb-content">
+									<div class="lb-date">June 21, 2018</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum </p>
+									<a href="#" class="lb-author">By Admin</a>
+								</div>
+							</div>
+							<div class="lb-item">
+								<div class="lb-thumb set-bg" data-setbg="img/latest-blog/2.jpg"></div>
+								<div class="lb-content">
+									<div class="lb-date">June 21, 2018</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum </p>
+									<a href="#" class="lb-author">By Admin</a>
+								</div>
+							</div>
+							<div class="lb-item">
+								<div class="lb-thumb set-bg" data-setbg="img/latest-blog/3.jpg"></div>
+								<div class="lb-content">
+									<div class="lb-date">June 21, 2018</div>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum </p>
+									<a href="#" class="lb-author">By Admin</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="footer-widget">
+						<h4 class="fw-title">Top Comments</h4>
+						<div class="top-comment">
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/1.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/2.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/3.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+							<div class="tc-item">
+								<div class="tc-thumb set-bg" data-setbg="img/authors/4.jpg"></div>
+								<div class="tc-content">
+									<p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+									<div class="tc-date">June 21, 2018</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer top section end -->
+
+	
+	<!-- Footer section -->
+	<footer class="footer-section">
+		<div class="container">
+			<ul class="footer-menu">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="review.html">Games</a></li>
+				<li><a href="categories.html">Blog</a></li>
+				<li><a href="community.html">Forums</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</p>
+		</div>
+	</footer>
+	<!-- Footer section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.marquee.min.js"></script>
+	<script src="js/main.js"></script>
+    </body>
+</html>

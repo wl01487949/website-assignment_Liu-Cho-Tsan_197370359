@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script>
+	$(document).ready(function(){   
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:4242/loginres",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+
+$("#Login").click(function(){
+		alert(" Please wait");
+		var LoginEmail, LoginPassword;
+		
+		LoginEmail=$("#LoginEmail").val();
+		LoginPassword=$("#LoginPassword").val();
+		
+		var mydata="&LoginEmail="+LoginEmail+"&LoginPassword="+LoginPassword;
+		
+			if(LoginEmail == "" || LoginPassword == "")
+		{
+			alert("Please fill in all the blanks.");
+			return;
+		}
+
+		else
+		{
+			$.ajax({
+				url: "http://127.0.0.1:4242/login", 
+				type: 'POST',
+				data: mydata,
+				success: function(result){
+				if (result == "fail") {
+					alert("Not have this user, please check your username");
+					}else{
+					alert("Login success");
+					
+					localStorage.setItem("name", result);
+					window.location.href = "http://127.0.0.1:4242/index";
+					}
+					}, error: function (xhr, textStatus, errorThrown) {
+						alert("Login failed, please check your username and password");
+						console.log(textStatus);
+
+			
+      		}
+				});
+			}
+	});
+});
+
+</script>
+
+
+<script>
+
+$(document).ready(function(){   
+	// handle button clicks         
+  $('#buttonID').click(function() {
+		// make an ajax call
+		alert($('#formID').serialize());
+    $.ajax({
+            dataType: 'jsonp',
+            jsonpCallback: '_wrapper',
+            data: $('#formID').serialize(),
+            type: 'POST',
+            url: "http://127.0.0.1:4242/register",
+            success: handleButtonResponse,
+        });
+    });
+    function handleButtonResponse(data){
+      alert(data);
+      // parse the json string
+      var jsonObject = JSON.parse(data);
+      $('#reponseID').append( jsonObject.message );
+    }
+
+	$("#send").click(function(){
+		alert("Please wait");
+		
+
+		
+		var SignUpEmail=$("#defaultForm-email").val();
+		var SignUpPassword=$("#defaultForm-pass").val();
+		var SignUpRePassword=$("#defaultForm-pass2").val();
+		
+		var mydata="&Email="+SignUpEmail+"&password="+SignUpPassword+"&SignUpRePassword="+SignUpRePassword;
+		
+			if(SignUpEmail == "" || SignUpPassword == ""||SignUpRePassword=="")
+		{
+			alert("Please fill in all the blanks.");
+			return;
+			
+		}
+		 if(SignUpPassword!=SignUpRePassword){
+		   alert("Password not match");
+		   return;
+		}
+
+			if(/[a-z0-9._%+-]+@hotmail.com/.test(SignUpEmail) == false)
+			{
+				alert("Email must followed by an @hotmail.com");
+				return;
+			}
+			
+			
+            if(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(SignUpPassword)==false)
+			{
+				alert("Please contain at least one number and one uppercase and lowercase letter");
+				return;
+			}
+
+		else
+		{
+			$.ajax({
+				url: "http://127.0.0.1:4242/register", 
+				type: 'POST',
+				data: mydata,
+				success: function(result){
+					alert("Registration success");
+					alert("Thanks for creating an account, your Email is: " + SignUpEmail + "and password is: "+ SignUpPassword + ". Enjoy!");
+
+					}, error: function (xhr, textStatus, errorThrown) {
+						alert("Registration failed, please try again with other Email");
+						console.log(textStatus);
+      		}
+				});
+			}
+	});
+});
+
+
+
+</script>
+
+
+<script>
+
+/*
+
+$( document ).ready(function() {
+
+
+     $('body').on('click', "#signinsend",function(){
+     
+            var email=$("#defaultForm-email").val();
+            var password=$("#defaultForm-pass").val();
+           // var password2=$("#defaultForm-pass2").val();
+            
+            
+            if(email=="" || password=="" ){
+               alert("Please enter username");
+               return;
+            }
+            
+            
+          
+            
+            
+            
+            //var mydata="email="+email+"&pass="+password;
+            //alert(mydata);
+      		var mydata={"user":email,"pass":password};
+		
+			alert(mydata);
+         $.ajax({
+            type: "POST", // Post / Get method
+            url: "http://127.0.0.1:4242/login", //Where form data is sent on submission
+            dataType:"json", // Data type, HTML, json etc.
+            data:JSON.stringify(mydata),  //Form variables
+            success:function(response){
+;
+			var a =JSON.stringify(response);
+			var b = JSON.parse(a);
+
+			if(b.result == "abc")
+			{
+			alert("11111")
+			//window.location="/nonmember";
+			}
+			
+			if((response[0]['user'])== email&&(response[0]['password'])== password){
+			alert("success");
+			window.location="/index";
+			}else{
+			alert("wrong password");
+
+			}
+			},
+		
+            error:function (xhr, ajaxOptions, thrownError){
+                alert(thrownError);
+            }
+            });
+      });       
+            
+});
+
+*/
+
+</script>
+
+<html>
+<head>
+	<title>How to Design Login & Registration Form Transition</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="styles2.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="cont">
+    <div class="form sign-in">
+      <h2>Sign In</h2>
+      <label>
+        <span>Email Address</span>
+        <input type="email" name="email" id="LoginEmail">
+      </label>
+      <label>
+        <span>Password</span>
+        <input type="password" name="password" id="LoginPassword">
+      </label>
+      <button  id="Login" class="submit" type="button">Sign In</button>
+      <p class="forgot-pass">Forgot Password ?</p>
+
+      <div class="social-media">
+        <ul>
+          <li><img src="img/facebook.png"></li>
+          <li><img src="img/twitter.png"></li>
+          <li><img src="img/linkedin.png"></li>
+          <li><img src="img/instagram.png"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub-cont">
+      <div class="img">
+        <div class="img-text m-up">
+          <h2>New here?</h2>
+          <p>Sign up and discover great amount of new opportunities!</p>
+        </div>
+        <div class="img-text m-in">
+          <h2>One of us?</h2>
+          <p>If you already has an account, just sign in. We've missed you!</p>
+        </div>
+        <div class="img-btn">
+          <span class="m-up">Sign Up</span>
+          <span class="m-in">Sign In</span>
+        </div>
+      </div>
+      <div class="form sign-up">
+        <h2>Sign Up</h2>
+        
+        <label>
+          <span>Email</span>
+          <input type="email" id="defaultForm-email">
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" id="defaultForm-pass">
+        </label>
+        <label>
+          <span>Confirm Password</span>
+          <input type="password" id="defaultForm-pass2">
+        </label>
+        <button id="send" class="submit" >Sign Up Now</button>
+      </div>
+    </div>
+  </div>
+<script type="text/javascript" src="script2.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
+</body>
+</html>
